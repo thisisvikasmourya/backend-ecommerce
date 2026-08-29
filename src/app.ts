@@ -1,6 +1,10 @@
 import express, { Express } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import { pinoHttp } from 'pino-http';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
@@ -9,11 +13,14 @@ import { notFoundHandler } from './common/middleware/not-found.middleware.js';
 import { errorHandler } from './common/middleware/error.middleware.js';
 import { apiRouter } from './modules/routes.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export function createApp(): Express {
   const app = express();
 
   // Security headers
-  app.use(helmet());
+  app.use(helmet({ contentSecurityPolicy: false }));
 
   // CORS configuration
   app.use(
@@ -43,13 +50,22 @@ export function createApp(): Express {
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+  // Swagger Documentation
+  try {
+    const swaggerDocument = YAML.load(path.join(__dirname, 'docs', 'openapi.yaml'));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  } catch (err: any) {
+    logger.warn({ err: err.message }, 'Swagger UI initialization warning');
+  }
+
   // Root endpoint
   app.get('/', (_req, res) => {
     res.json({
       name: 'E-Commerce Backend API',
       version: '1.0.0',
       status: 'active',
-      docs: `${env.API_PREFIX}/health`,
+      docs: '/api/docs',
+      apiPrefix: env.API_PREFIX,
     });
   });
 

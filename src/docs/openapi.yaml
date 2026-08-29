@@ -1,0 +1,330 @@
+openapi: 3.0.3
+info:
+  title: E-Commerce Backend API
+  version: 1.0.0
+  description: Production-grade modular monolith e-commerce REST API built with Node.js, Express, TypeScript, PostgreSQL, Prisma, Redis, and BullMQ.
+servers:
+  - url: http://localhost:4000/api/v1
+    description: Local Development Server
+tags:
+  - name: Health
+    description: Service health check and liveness
+  - name: Auth
+    description: Authentication, JWT access & refresh token rotation
+  - name: Users
+    description: User profile and account management
+  - name: Addresses
+    description: Customer delivery addresses
+  - name: Categories
+    description: Hierarchical category tree and taxonomy
+  - name: Brands
+    description: Manufacturer brands
+  - name: Products
+    description: Products, variants, inventory, and filtering
+  - name: Cart
+    description: Shopping cart, item management, and coupon calculation
+  - name: Wishlist
+    description: Customer product wishlist
+  - name: Inventory
+    description: Stock tracking, movement logs, and reservation
+  - name: Orders
+    description: Checkout, atomic transaction, order lifecycle, and cancellation
+  - name: Payments
+    description: Idempotent payments, gateway webhooks, and refunds
+  - name: Coupons
+    description: Discount codes and validation
+  - name: Reviews
+    description: Customer reviews and verified buyer rating stats
+  - name: Admin
+    description: Back-office administration and dashboard analytics
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new customer account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password, firstName, lastName]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                phone:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate user and receive JWT tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh JWT access token with rotation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: New tokens issued
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Revoke refresh token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Logged out
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current authenticated user
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Current user profile
+
+  /products:
+    get:
+      tags: [Products]
+      summary: List and filter products
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20 }
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: category
+          in: query
+          schema: { type: string }
+        - name: brand
+          in: query
+          schema: { type: string }
+        - name: minPrice
+          in: query
+          schema: { type: number }
+        - name: maxPrice
+          in: query
+          schema: { type: number }
+        - name: color
+          in: query
+          schema: { type: string }
+        - name: size
+          in: query
+          schema: { type: string }
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [price_asc, price_desc, newest, rating]
+      responses:
+        '200':
+          description: Paginated product list
+    post:
+      tags: [Products]
+      summary: Create a product with variants (Admin only)
+      security:
+        - BearerAuth: []
+      responses:
+        '201':
+          description: Product created
+
+  /products/{id}:
+    get:
+      tags: [Products]
+      summary: Get product details by ID or slug
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Product details
+
+  /categories:
+    get:
+      tags: [Categories]
+      summary: List all categories (flat or tree)
+      parameters:
+        - name: tree
+          in: query
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: List of categories
+
+  /brands:
+    get:
+      tags: [Brands]
+      summary: List all brands
+      responses:
+        '200':
+          description: List of brands
+
+  /cart:
+    get:
+      tags: [Cart]
+      summary: Get authenticated user's cart with calculated totals
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: coupon
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: User cart
+    delete:
+      tags: [Cart]
+      summary: Clear cart
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Cart cleared
+
+  /cart/items:
+    post:
+      tags: [Cart]
+      summary: Add variant item to cart
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [variantId, quantity]
+              properties:
+                variantId: { type: string, format: uuid }
+                quantity: { type: integer, default: 1 }
+      responses:
+        '201':
+          description: Item added
+
+  /orders:
+    post:
+      tags: [Orders]
+      summary: Place an order (Atomic Checkout)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addressId: { type: string, format: uuid }
+                couponCode: { type: string }
+      responses:
+        '201':
+          description: Order created
+    get:
+      tags: [Orders]
+      summary: List user orders
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Orders list
+
+  /payments/webhook:
+    post:
+      tags: [Payments]
+      summary: Process payment webhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event, transactionId, status, amount]
+              properties:
+                event: { type: string }
+                paymentId: { type: string, format: uuid }
+                orderId: { type: string }
+                transactionId: { type: string }
+                status: { type: string, enum: [SUCCESS, FAILED] }
+                amount: { type: number }
+      responses:
+        '200':
+          description: Webhook processed
+
+  /admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Get back-office analytics dashboard metrics
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Dashboard statistics
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

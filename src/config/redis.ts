@@ -26,7 +26,10 @@ redis.on('connect', () => {
 
 redis.on('error', (err) => {
   if (!isErrorLogged) {
-    logger.warn({ err: err.message }, '⚠️ Redis connection offline (caching/queues will be disabled until started)');
+    logger.warn(
+      { err: err.message },
+      '⚠️ Redis connection offline (caching/queues will be disabled until started)',
+    );
     isErrorLogged = true;
   }
 });

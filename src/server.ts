@@ -13,7 +13,10 @@ async function bootstrap() {
 
   // Attempt database and redis connections in background so server still starts
   connectDatabase().catch((err) => {
-    logger.warn({ err: err.message }, '⚠️ Database connection pending (ensure PostgreSQL is running)');
+    logger.warn(
+      { err: err.message },
+      '⚠️ Database connection pending (ensure PostgreSQL is running)',
+    );
   });
 
   connectRedis().catch((err) => {

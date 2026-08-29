@@ -21,8 +21,10 @@ export function validate(schema: ValidationSchema) {
         });
         if (parsed && typeof parsed === 'object') {
           if ('body' in parsed && parsed.body !== undefined) req.body = parsed.body;
-          if ('query' in parsed && parsed.query !== undefined) req.query = parsed.query as Request['query'];
-          if ('params' in parsed && parsed.params !== undefined) req.params = parsed.params as Request['params'];
+          if ('query' in parsed && parsed.query !== undefined)
+            req.query = parsed.query as Request['query'];
+          if ('params' in parsed && parsed.params !== undefined)
+            req.params = parsed.params as Request['params'];
         }
       } else {
         if (schema.body) {

@@ -21,7 +21,8 @@ export class ProductRepository {
 
   public async findByIdOrSlug(identifier: string): Promise<any | null> {
     // Check if identifier is valid UUID or search by slug
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(identifier);
+    const isUuid =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(identifier);
 
     return prisma.product.findFirst({
       where: isUuid ? { OR: [{ id: identifier }, { slug: identifier }] } : { slug: identifier },
@@ -211,7 +212,10 @@ export class ProductRepository {
     });
   }
 
-  public async updateVariant(variantId: string, data: Prisma.ProductVariantUpdateInput): Promise<ProductVariant> {
+  public async updateVariant(
+    variantId: string,
+    data: Prisma.ProductVariantUpdateInput,
+  ): Promise<ProductVariant> {
     return prisma.productVariant.update({
       where: { id: variantId },
       data,
@@ -225,7 +229,10 @@ export class ProductRepository {
     return prisma.productVariant.delete({ where: { id: variantId } });
   }
 
-  public async addImage(productId: string, data: Prisma.ProductImageCreateWithoutProductInput): Promise<ProductImage> {
+  public async addImage(
+    productId: string,
+    data: Prisma.ProductImageCreateWithoutProductInput,
+  ): Promise<ProductImage> {
     if (data.isPrimary) {
       await prisma.productImage.updateMany({
         where: { productId },

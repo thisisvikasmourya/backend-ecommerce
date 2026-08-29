@@ -10,9 +10,7 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/', (req, res, next) =>
-  addressController.getAddresses(req, res).catch(next),
-);
+router.get('/', (req, res, next) => addressController.getAddresses(req, res).catch(next));
 
 router.post('/', validate(createAddressSchema), (req, res, next) =>
   addressController.createAddress(req, res).catch(next),

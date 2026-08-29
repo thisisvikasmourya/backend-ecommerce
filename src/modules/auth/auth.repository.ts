@@ -26,7 +26,9 @@ export class AuthRepository {
     });
   }
 
-  public async findRefreshToken(tokenHash: string): Promise<(RefreshToken & { user: User }) | null> {
+  public async findRefreshToken(
+    tokenHash: string,
+  ): Promise<(RefreshToken & { user: User }) | null> {
     return prisma.refreshToken.findUnique({
       where: { tokenHash },
       include: { user: true },

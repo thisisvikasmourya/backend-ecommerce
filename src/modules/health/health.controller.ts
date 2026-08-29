@@ -12,6 +12,13 @@ export class HealthController {
     });
   }
 
+  public async getLiveness(_req: Request, res: Response): Promise<void> {
+    sendSuccess(res, {
+      status: 'live',
+      timestamp: new Date().toISOString(),
+    });
+  }
+
   public async getReadiness(_req: Request, res: Response): Promise<void> {
     let dbStatus = 'disconnected';
     let redisStatus = 'disconnected';

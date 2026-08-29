@@ -1349,131 +1349,131 @@ Documentation should be updated alongside API changes.
 
 ## Phase 1 — Foundation
 
-- [ ] Initialize Node.js project
-- [ ] Configure TypeScript
-- [ ] Configure Express
-- [ ] Configure ESLint
-- [ ] Configure Prettier
-- [ ] Configure environment variables
-- [ ] Configure Pino
-- [ ] Create error architecture
-- [ ] Create project structure
+- [x] Initialize Node.js project
+- [x] Configure TypeScript
+- [x] Configure Express
+- [x] Configure ESLint
+- [x] Configure Prettier
+- [x] Configure environment variables
+- [x] Configure Pino
+- [x] Create error architecture
+- [x] Create project structure
 
 ## Phase 2 — Database
 
-- [ ] Install PostgreSQL
-- [ ] Configure Prisma
-- [ ] Design schema
-- [ ] Create migrations
-- [ ] Add indexes
-- [ ] Create seed data
-- [ ] Test relationships
+- [x] Install PostgreSQL
+- [x] Configure Prisma
+- [x] Design schema
+- [x] Create migrations
+- [x] Add indexes
+- [x] Create seed data
+- [x] Test relationships
 
 ## Phase 3 — Authentication
 
-- [ ] Register
-- [ ] Login
-- [ ] Logout
-- [ ] Access tokens
-- [ ] Refresh tokens
-- [ ] Refresh-token rotation
-- [ ] Password reset
-- [ ] RBAC
+- [x] Register
+- [x] Login
+- [x] Logout
+- [x] Access tokens
+- [x] Refresh tokens
+- [x] Refresh-token rotation
+- [x] Password reset
+- [x] RBAC
 
 ## Phase 4 — Products
 
-- [ ] Products
-- [ ] Product variants
-- [ ] Categories
-- [ ] Brands
-- [ ] Images
-- [ ] Pagination
-- [ ] Filtering
-- [ ] Sorting
-- [ ] Search
+- [x] Products
+- [x] Product variants
+- [x] Categories
+- [x] Brands
+- [x] Images
+- [x] Pagination
+- [x] Filtering
+- [x] Sorting
+- [x] Search
 
 ## Phase 5 — Cart
 
-- [ ] Create cart
-- [ ] Add item
-- [ ] Update quantity
-- [ ] Remove item
-- [ ] Clear cart
-- [ ] Calculate totals
-- [ ] Apply coupon
+- [x] Create cart
+- [x] Add item
+- [x] Update quantity
+- [x] Remove item
+- [x] Clear cart
+- [x] Calculate totals
+- [x] Apply coupon
 
 ## Phase 6 — Inventory
 
-- [ ] Stock model
-- [ ] Inventory movements
-- [ ] Stock reservation
-- [ ] Reservation expiration
-- [ ] Concurrency control
-- [ ] Transactions
-- [ ] Low-stock alerts
+- [x] Stock model
+- [x] Inventory movements
+- [x] Stock reservation
+- [x] Reservation expiration
+- [x] Concurrency control
+- [x] Transactions
+- [x] Low-stock alerts
 
 ## Phase 7 — Orders
 
-- [ ] Checkout
-- [ ] Order creation
-- [ ] Order items
-- [ ] Product snapshots
-- [ ] Address snapshots
-- [ ] Order status
-- [ ] Cancellation
+- [x] Checkout
+- [x] Order creation
+- [x] Order items
+- [x] Product snapshots
+- [x] Address snapshots
+- [x] Order status
+- [x] Cancellation
 
 ## Phase 8 — Payments
 
-- [ ] Payment gateway integration
-- [ ] Payment intent/order
-- [ ] Payment verification
-- [ ] Webhook
-- [ ] Signature verification
-- [ ] Idempotency
-- [ ] Refunds
+- [x] Payment gateway integration
+- [x] Payment intent/order
+- [x] Payment verification
+- [x] Webhook
+- [x] Signature verification
+- [x] Idempotency
+- [x] Refunds
 
 ## Phase 9 — Async Architecture
 
-- [ ] Redis
-- [ ] BullMQ
-- [ ] Email jobs
-- [ ] Notification jobs
-- [ ] Invoice jobs
-- [ ] Inventory expiration jobs
+- [x] Redis
+- [x] BullMQ
+- [x] Email jobs
+- [x] Notification jobs
+- [x] Invoice jobs
+- [x] Inventory expiration jobs
 
 ## Phase 10 — Admin
 
-- [ ] Admin authentication
-- [ ] Product management
-- [ ] Order management
-- [ ] User management
-- [ ] Inventory management
-- [ ] Coupon management
-- [ ] Reports
-- [ ] Audit logs
+- [x] Admin authentication
+- [x] Product management
+- [x] Order management
+- [x] User management
+- [x] Inventory management
+- [x] Coupon management
+- [x] Reports
+- [x] Audit logs
 
 ## Phase 11 — Testing
 
-- [ ] Unit tests
-- [ ] Integration tests
-- [ ] E2E tests
-- [ ] Load testing
-- [ ] Security testing
-- [ ] Failure testing
+- [x] Unit tests
+- [x] Integration tests
+- [x] E2E tests
+- [x] Load testing
+- [x] Security testing
+- [x] Failure testing
 
 ## Phase 12 — Production
 
-- [ ] Docker
-- [ ] Docker Compose
-- [ ] Nginx
-- [ ] CI/CD
-- [ ] Logging
-- [ ] Metrics
-- [ ] Tracing
-- [ ] Health checks
-- [ ] Database backups
-- [ ] Deployment
-- [ ] Production configuration
+- [x] Docker
+- [x] Docker Compose
+- [x] Nginx
+- [x] CI/CD
+- [x] Logging
+- [x] Metrics
+- [x] Tracing
+- [x] Health checks
+- [x] Database backups
+- [x] Deployment
+- [x] Production configuration
 
 ---
 

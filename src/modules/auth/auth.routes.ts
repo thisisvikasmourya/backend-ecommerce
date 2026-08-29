@@ -18,12 +18,8 @@ router.post('/refresh', validate(refreshTokenSchema), (req, res, next) =>
   authController.refresh(req, res).catch(next),
 );
 
-router.post('/logout', (req, res, next) =>
-  authController.logout(req, res).catch(next),
-);
+router.post('/logout', (req, res, next) => authController.logout(req, res).catch(next));
 
-router.get('/me', authenticate, (req, res, next) =>
-  authController.getMe(req, res).catch(next),
-);
+router.get('/me', authenticate, (req, res, next) => authController.getMe(req, res).catch(next));
 
 export const authRoutes = router;

@@ -9,14 +9,23 @@ const envSchema = z.object({
   API_PREFIX: z.string().default('/api/v1'),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
 
-  DATABASE_URL: z.string().url().default('postgresql://postgres:postgres@localhost:5432/ecommerce_db?schema=public'),
+  DATABASE_URL: z
+    .string()
+    .url()
+    .default('postgresql://postgres:postgres@localhost:5432/ecommerce_db?schema=public'),
 
   REDIS_HOST: z.string().default('localhost'),
   REDIS_PORT: z.coerce.number().default(6379),
   REDIS_PASSWORD: z.string().optional().default(''),
 
-  JWT_ACCESS_SECRET: z.string().min(16).default('your_super_secret_access_token_key_change_in_production'),
-  JWT_REFRESH_SECRET: z.string().min(16).default('your_super_secret_refresh_token_key_change_in_production'),
+  JWT_ACCESS_SECRET: z
+    .string()
+    .min(16)
+    .default('your_super_secret_access_token_key_change_in_production'),
+  JWT_REFRESH_SECRET: z
+    .string()
+    .min(16)
+    .default('your_super_secret_refresh_token_key_change_in_production'),
   JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
 
@@ -36,7 +45,10 @@ const envSchema = z.object({
 const parsedEnv = envSchema.safeParse(process.env);
 
 if (!parsedEnv.success) {
-  console.error('❌ Invalid environment variables:', JSON.stringify(parsedEnv.error.format(), null, 2));
+  console.error(
+    '❌ Invalid environment variables:',
+    JSON.stringify(parsedEnv.error.format(), null, 2),
+  );
   process.exit(1);
 }
 

@@ -2,7 +2,10 @@ import { prisma } from '../../config/database.js';
 import { Inventory, InventoryMovement, InventoryMovementType, Prisma } from '@prisma/client';
 
 export class InventoryRepository {
-  public async findByVariantId(variantId: string, tx?: Prisma.TransactionClient): Promise<Inventory | null> {
+  public async findByVariantId(
+    variantId: string,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Inventory | null> {
     const client = tx || prisma;
     return client.inventory.findUnique({
       where: { variantId },

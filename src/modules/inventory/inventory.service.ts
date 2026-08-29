@@ -47,7 +47,10 @@ export class InventoryService {
   ) {
     const inventory = await this.repo.findByVariantId(variantId, tx);
     if (!inventory) {
-      throw new NotFoundError(`Inventory record for variant ${variantId} not found`, ErrorCodes.NOT_FOUND);
+      throw new NotFoundError(
+        `Inventory record for variant ${variantId} not found`,
+        ErrorCodes.NOT_FOUND,
+      );
     }
 
     if (inventory.availableStock < quantity) {
@@ -81,7 +84,10 @@ export class InventoryService {
   ) {
     const inventory = await this.repo.findByVariantId(variantId, tx);
     if (!inventory) {
-      throw new NotFoundError(`Inventory record for variant ${variantId} not found`, ErrorCodes.NOT_FOUND);
+      throw new NotFoundError(
+        `Inventory record for variant ${variantId} not found`,
+        ErrorCodes.NOT_FOUND,
+      );
     }
 
     const releaseQty = Math.min(inventory.reservedStock, quantity);
@@ -110,7 +116,10 @@ export class InventoryService {
   ) {
     const inventory = await this.repo.findByVariantId(variantId, tx);
     if (!inventory) {
-      throw new NotFoundError(`Inventory record for variant ${variantId} not found`, ErrorCodes.NOT_FOUND);
+      throw new NotFoundError(
+        `Inventory record for variant ${variantId} not found`,
+        ErrorCodes.NOT_FOUND,
+      );
     }
 
     const soldQty = Math.min(inventory.reservedStock, quantity);

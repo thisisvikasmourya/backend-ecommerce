@@ -8,16 +8,12 @@ const router = Router();
 
 router.use(authenticate);
 
-router.get('/me', (req, res, next) =>
-  userController.getProfile(req, res).catch(next),
-);
+router.get('/me', (req, res, next) => userController.getProfile(req, res).catch(next));
 
 router.patch('/me', validate(updateProfileSchema), (req, res, next) =>
   userController.updateProfile(req, res).catch(next),
 );
 
-router.delete('/me', (req, res, next) =>
-  userController.deactivateAccount(req, res).catch(next),
-);
+router.delete('/me', (req, res, next) => userController.deactivateAccount(req, res).catch(next));
 
 export const userRoutes = router;

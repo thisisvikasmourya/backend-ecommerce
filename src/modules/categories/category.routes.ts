@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { categoryController } from './category.controller.js';
 import { validate } from '../../common/middleware/validate.middleware.js';
-import { createCategorySchema, updateCategorySchema, getCategoryByIdSchema } from './category.schema.js';
+import {
+  createCategorySchema,
+  updateCategorySchema,
+  getCategoryByIdSchema,
+} from './category.schema.js';
 import { authenticate } from '../../common/middleware/auth.middleware.js';
 import { authorize } from '../../common/middleware/rbac.middleware.js';
 import { Roles } from '../../common/constants/roles.js';

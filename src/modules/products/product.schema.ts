@@ -63,7 +63,10 @@ export const getProductsQuerySchema = z.object({
     color: z.string().optional(),
     size: z.string().optional(),
     sort: z.enum(['price_asc', 'price_desc', 'newest', 'rating']).optional(),
-    isActive: z.enum(['true', 'false']).transform((v) => v === 'true').optional(),
+    isActive: z
+      .enum(['true', 'false'])
+      .transform((v) => v === 'true')
+      .optional(),
   }),
 });
 

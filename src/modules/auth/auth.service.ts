@@ -15,7 +15,10 @@ export class AuthService {
   public async register(input: RegisterInput): Promise<AuthResponse> {
     const existing = await this.repo.findByEmail(input.email);
     if (existing) {
-      throw new ConflictError('A user with this email address already exists', ErrorCodes.USER_ALREADY_EXISTS);
+      throw new ConflictError(
+        'A user with this email address already exists',
+        ErrorCodes.USER_ALREADY_EXISTS,
+      );
     }
 
     const passwordHash = await argon2.hash(input.password);
@@ -50,7 +53,10 @@ export class AuthService {
     }
 
     if (!user.isActive) {
-      throw new UnauthorizedError('Account is inactive. Please contact support.', ErrorCodes.USER_INACTIVE);
+      throw new UnauthorizedError(
+        'Account is inactive. Please contact support.',
+        ErrorCodes.USER_INACTIVE,
+      );
     }
 
     const isValid = await argon2.verify(user.passwordHash, input.password);
@@ -81,7 +87,10 @@ export class AuthService {
         // Potential token reuse attack, revoke all tokens for this user
         await this.repo.revokeAllUserTokens(tokenRecord.userId);
       }
-      throw new UnauthorizedError('Invalid or expired refresh token', ErrorCodes.REFRESH_TOKEN_REVOKED);
+      throw new UnauthorizedError(
+        'Invalid or expired refresh token',
+        ErrorCodes.REFRESH_TOKEN_REVOKED,
+      );
     }
 
     // Revoke old token (rotation)
