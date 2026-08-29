@@ -5,7 +5,7 @@ import { NotFoundError, ForbiddenError } from '../../common/errors/app-error.js'
 import { ErrorCodes } from '../../common/errors/error-codes.js';
 
 export class AddressService {
-  constructor(private readonly repo: AddressRepository = addressRepository) {}
+  constructor(private readonly repo: AddressRepository = addressRepository) { }
 
   public async getAddresses(userId: string): Promise<Address[]> {
     return this.repo.findByUserId(userId);
